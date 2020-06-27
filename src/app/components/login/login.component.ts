@@ -16,7 +16,9 @@ export class LoginComponent implements OnInit {
   }
 
   connectToRoom(): void {
-    this.chatService.establishWebSocketConnection();
+    if(this.username){
+      this.chatService.establishWebSocketConnection(this.username);
+    } 
   }
 
 

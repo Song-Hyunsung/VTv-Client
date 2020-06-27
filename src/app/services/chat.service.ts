@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 declare var SockJS: any;
 declare var Stomp: any;
 
@@ -13,21 +14,25 @@ export class ChatService {
 	// Variable for stomp client
 	stompClient: any;
 
-  constructor(){ }
+  constructor(private router: Router){ }
 
-  establishWebSocketConnection(): void {
+  establishWebSocketConnection(username: String): void {
   	let socket = new SockJS(this.WEBSOCKET_SERVER_URL);
   	this.stompClient = Stomp.over(socket);
 
   	// Connect to stomp client, provide anonymous onConnect callback function and onError callback function
   	this.stompClient.connect({}, ()=>{
 	  	this.stompClient.subscribe("/topic/public", this.onMessageReceived);
-	  	this.stompClient.send("/app/chat.addUser", {}, JSON.stringify({ sender: "HARDCODED USERNAME", type: "JOIN" }));
+	  	this.stompClient.send("/app/chat.addUser", {}, JSON.stringify({ sender: username, type: "JOIN" }));
+      this.router.navigate(['/room']);
   	}, this.onError);
   }
 
   onError(): void {
-  	console.log("ON ERROR FUNCTION INVOKED");
+    alert("Service is not available at this moment, Please try again later");
+    console.log("onError method in ChatService invoked");
+    this.router.navigate(["/"]);
+
   }
 
   onMessageReceived(payload: any): void {

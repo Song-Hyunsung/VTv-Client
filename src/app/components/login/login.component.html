@@ -1,8 +1,9 @@
 <div>
 	<h1>Type your username</h1>
 
-	<form>
-		<input [(ngModel)]="username" name="username" autocomplete="off" placeholder="Username">
+	<form ngNativeValidate>
+		<input [(ngModel)]="username" name="username" type="text" required autocomplete="off" 
+					 placeholder="Username" oninvalid="this.setCustomValidity('Please enter a username')">
 		<button (click)="connectToRoom()">Join the room</button>
 	</form>
 </div>
