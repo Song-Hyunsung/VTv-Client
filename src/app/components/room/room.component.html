@@ -1,11 +1,6 @@
 <div>
 	<h1>Chat Room</h1>
-
-	<div *ngFor="let message of chatService.messageArray">
-		<p>{{message}}</p>
-	</div>
-
-	<input [(ngModel)]="messageInput" type="text" name="message" placeholder="message">
-	<button (click)="sendMessage()">Send</button>
-	<button (click)="showAll()">Show the message array</button>
+</div>
+<div>
+	<app-chat></app-chat>
 </div>
